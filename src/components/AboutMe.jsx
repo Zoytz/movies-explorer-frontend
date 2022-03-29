@@ -1,7 +1,6 @@
 import React from 'react';
 import developer from '../images/developer.png';
 import { Link } from 'react-router-dom';
-import arrow from '../images/arrow.svg';
 
 export const AboutMe = React.memo((props) => {
 
@@ -22,19 +21,6 @@ export const AboutMe = React.memo((props) => {
         </div>
         <img src={developer} alt="" className="developer__image" />
       </div>
-      <h4 className="developer__portfolio">Портфолио</h4>
-      <Link to="#" className="developer__portfolio-link">
-        <p className="developer__portfolio-text">Статичный сайт</p>
-        <img src={arrow} alt="Стрелка перехода" className="developer__portfolio-image" />
-      </Link>
-      <Link to="#" className="developer__portfolio-link">
-        <p className="developer__portfolio-text">Адаптивный сайт</p>
-        <img src={arrow} alt="Стрелка перехода" className="developer__portfolio-image" />
-      </Link>
-      <Link to="#" className="developer__portfolio-link">
-        <p className="developer__portfolio-text">Одностраничное приложение</p>
-        <img src={arrow} alt="Стрелка перехода" className="developer__portfolio-image" />
-      </Link>
     </section >
   )
 })

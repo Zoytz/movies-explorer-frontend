@@ -155,7 +155,11 @@
 @import url(../src/blocks/developer/__links/developer__links.css);
 @import url(../src/blocks/developer/__link/developer__link.css);
 @import url(../src/blocks/developer/__image/developer__image.css);
-@import url(../src/blocks/developer/__portfolio/developer__portfolio.css);
-@import url(../src/blocks/developer/__portfolio-link/developer__portfolio-link.css);
-@import url(../src/blocks/developer/__portfolio-text/developer__portfolio-text.css);
-@import url(../src/blocks/developer/__portfolio-image/developer__portfolio-image.css);
+
+/* portfolio */
+
+@import url(../src/blocks/portfolio/portfolio.css);
+@import url(../src/blocks/portfolio/__title/portfolio__title.css);
+@import url(../src/blocks/portfolio/__link/portfolio__link.css);
+@import url(../src/blocks/portfolio/__text/portfolio__text.css);
+@import url(../src/blocks/portfolio/__image/portfolio__image.css);

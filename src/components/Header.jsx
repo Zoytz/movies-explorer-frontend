@@ -7,7 +7,9 @@ const Header = React.memo((props) => {
     <Routes>
       <Route path="/sign-up" element={
         <header className="header page__header">
-          <img className="logo" src={headerLogo} alt="Место" />
+          <Link to="/" className="header__link">
+            <img className="logo" src={headerLogo} alt="Место" />
+          </Link>
           <Link to="/sign-in" className="header__link">Войти</Link>
         </header>
       } />
@@ -19,7 +21,9 @@ const Header = React.memo((props) => {
       } />
       <Route exact path="/" element={
         <header className="header page__header">
-          <img className="logo" src={headerLogo} alt="Место" />
+          <Link to="/" className="header__link">
+            <img className="logo" src={headerLogo} alt="Место" />
+          </Link>
           <div className="header__info">
             <Link to="/sign-up" className="header__link">Регистрация</Link>
             <button onClick={props.handleLogout} className="header__button">Войти</button>

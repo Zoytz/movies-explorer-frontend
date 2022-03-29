@@ -8,6 +8,7 @@ import { RegisterForm } from '../components/RegisterForm';
 import { Promo } from '../components/Promo';
 import { Techs } from '../components/Techs';
 import { AboutMe } from '../components/AboutMe';
+import { Portfolio } from '../components/Portfolio';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { NavTab } from '../components/NavTab';
@@ -25,13 +26,9 @@ function App() {
     <div className="page">
       <div className="page__container">
         <CurrentUserContext.Provider>
-          {/* <Header
-              userEmail={userEmail}
-              handleLogout={handleLogout}
-              isMenuButtonActive={isMenuButtonActive}
-              handleMenuButtonActive={handleMenuButtonActive}
-            /> */}
+          
           <Routes>
+
             <Route path="/" element={
               <Main>
                 <Header />
@@ -40,6 +37,49 @@ function App() {
                 <AboutProject />
                 <Techs />
                 <AboutMe />
+                <Portfolio />
+                <Footer />
+              </Main>
+            }
+            />
+
+            <Route path="/movies" element={
+              <Main>
+                <Header />
+                <Promo />
+                <NavTab />
+                <AboutProject />
+                <Techs />
+                <AboutMe />
+                <Portfolio />
+                <Footer />
+              </Main>
+            }
+            />
+
+            <Route path="/saved-movies" element={
+              <Main>
+                <Header />
+                <Promo />
+                <NavTab />
+                <AboutProject />
+                <Techs />
+                <AboutMe />
+                <Portfolio />
+                <Footer />
+              </Main>
+            }
+            />
+
+            <Route path="/profile" element={
+              <Main>
+                <Header />
+                <Promo />
+                <NavTab />
+                <AboutProject />
+                <Techs />
+                <AboutMe />
+                <Portfolio />
                 <Footer />
               </Main>
             }
@@ -52,6 +92,7 @@ function App() {
                   buttonText='Зарегистрироваться' />
               </Register>
             } />
+
             <Route path="/sign-in"
               element={
                 <Login>
