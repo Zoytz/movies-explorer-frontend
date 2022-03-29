@@ -1,0 +1,11 @@
+.developer__portfolio-link {
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.developer__portfolio-link:last-of-type {
+  border: none;
+}

@@ -1,0 +1,6 @@
+.developer__links {
+  display: flex;
+  justify-content: space-between;
+  max-width: 132px;
+  margin-top: 99px;
+}

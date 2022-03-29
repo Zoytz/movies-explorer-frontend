@@ -1,0 +1,13 @@
+.promo {
+  min-height: 524px;
+  background-color: #5C5C5C;
+  background-image: url(../../images/pic__COLOR_landing-logo.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 320px 320px;
+  padding-top: 82px;
+  padding-bottom: 122px;
+  box-sizing: border-box;
+  font-family: 'inter', Arial, Helvetica, sans-serif;
+  display: flex;
+}

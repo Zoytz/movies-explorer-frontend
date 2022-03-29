@@ -1,0 +1,12 @@
+.technologies__item {
+  padding-top: 21px ;
+  padding-bottom: 22px;
+  text-align: center;
+  min-width: 90px;
+  background-color: #E8E8E8;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -4%;
+  font-weight: 400;
+}
