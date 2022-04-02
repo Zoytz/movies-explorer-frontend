@@ -1,0 +1,118 @@
+.form {
+  max-width: 430px;
+  width: 100vw;
+  background-color: #fff;
+  margin: auto;
+  padding: 40px 0 0;
+  border-radius: 10px;
+  font-size: 0;
+  position: relative;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form_type_auth {
+  max-width: 396px;
+  padding: 0;
+}
+
+.form__item {
+  width: 100%;
+  padding: 0;
+}
+
+.form__item:focus {
+  outline: none;
+}
+
+.form__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  margin: 0;
+  margin-bottom: 54px;
+}
+
+.form__title_type_auth {
+  color: #000;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+.form__label {
+  color: #A0A0A0;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.form__input {
+  border: 0;
+  font-family: inherit;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  padding-bottom: 13px;
+  width: 100%;
+}
+
+.form__input:focus {
+outline: none;
+}
+
+.form__input_type_auth {
+  min-height: 46px;
+  background-color: #F9F9F9;
+  color: #000;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 15px;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.form__input_type_auth::placeholder {
+  color: #CCCCCC;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.form__input-error {
+  display: block;
+  padding-top: 5px;
+  min-height: 20px;
+  margin: 0;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  font-weight: 400;
+  visibility: hidden;
+}
+
+.form__input-error_active {
+  visibility: visible;
+}
+
+.form__button {
+  min-height: 50px;
+  border: none;
+  border-radius: 3px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: opacity .2s linear;
+  padding: 0;
+  background-color: #2BE080;
+  color: #fff;
+}
