@@ -1,10 +1,6 @@
 
 import React from 'react';
 import Main from '../Main/Main';
-import { Login } from '../Login/Login';
-import { Register } from '../Register/Register';
-import { AuthForm } from '../AuthForm/AuthForm';
-import { RegisterForm } from '../RegisterForm/RegisterForm';
 import { Promo } from '../Promo/Promo';
 import { Techs } from '../Techs/Techs';
 import { AboutMe } from '../AboutMe/AboutMe';
@@ -18,15 +14,16 @@ import { MoviesButton } from '../MoviesButton/MoviesButton';
 import { SavedMovies } from '../SavedMovies/SavedMovies';
 import { ProfileForm } from '../ProfileForm/ProfileForm';
 import { Page404 } from '../Page404/Page404';
+import { FormContainer } from '../FormContainer/FormContainer';
+import { Form } from '../Form/Form';
+import { FormInput } from '../FormInput/FormInput';
 import Preloader from '../Preloader/Preloader';
+import MobileMenu from '../MobileMenu/MobileMenu';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { NavTab } from '../NavTab/NavTab';
 import { AboutProject } from '../AboutProject/AboutProject';
-import api from '../../utils/Api';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import * as auth from '../../utils/auth';
+import { Route, Routes } from 'react-router-dom';
 
 
 function App() {
@@ -35,7 +32,6 @@ function App() {
   return (
     <div className="page">
       <div className="page__container">
-        <CurrentUserContext.Provider>
           <Header />
           <Routes>
             <Route exact path="/" element={
@@ -106,22 +102,47 @@ function App() {
 
             <Route path="/sign-up" element={
               <Main>
-                <Register>
-                  <RegisterForm
+                <FormContainer
+                  footerText='Уже зарегистрированы?'
+                  footerLink='Войти'
+                  link='/sign-in'>
+                  <Form
+                    name='register'
                     title='Добро пожаловать!'
-                    buttonText='Зарегистрироваться' />
-                </Register>
+                    buttonText='Зарегистрироваться'>
+                    <FormInput
+                      type='name'
+                      title='Имя' />
+                    <FormInput
+                      type='email'
+                      title='E-mail' />
+                    <FormInput
+                      type='password'
+                      title='Пароль' />
+                  </Form>
+                </FormContainer>
               </Main>
             } />
 
             <Route path="/sign-in"
               element={
                 <Main>
-                  <Login>
-                    <AuthForm
+                  <FormContainer
+                    footerText='Ещё не зарегистрированы?'
+                    footerLink='Регистрация'
+                    link='/sign-up'>
+                    <Form
+                      name='auth'
                       title='Рады видеть!'
-                      buttonText='Войти' />
-                  </Login>
+                      buttonText='Войти'>
+                      <FormInput
+                        type='email'
+                        title='E-mail' />
+                      <FormInput
+                        type='password'
+                        title='Пароль' />
+                    </Form>
+                  </FormContainer>
                 </Main>
               } />
 
@@ -131,7 +152,7 @@ function App() {
               } />
 
           </Routes>
-        </CurrentUserContext.Provider>
+          <MobileMenu />
       </div>
     </div>
   );

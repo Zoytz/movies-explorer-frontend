@@ -27,7 +27,7 @@ const Header = React.memo((props) => {
           <Link to="/" className="header__link">
             <img className="logo" src={headerLogo} alt="Место" />
           </Link>
-          <div className="header__info">
+          <div className="header__info header__info_theme_white">
             <nav className="header__menu">
               <ul className="header__menu-items page__list">
                 <li className="header__menu-item">
@@ -45,6 +45,7 @@ const Header = React.memo((props) => {
               <img src={profileLogo} alt="картинка профиля" className="header__profile-image" />
             </Link>
           </div>
+          <button className="header__menu-button"></button>
         </header >
       } />
 
@@ -53,7 +54,7 @@ const Header = React.memo((props) => {
           <Link to="/" className="header__link">
             <img className="logo" src={headerLogo} alt="Место" />
           </Link>
-          <div className="header__info">
+          <div className="header__info header__info_theme_white">
             <nav className="header__menu">
               <ul className="header__menu-items page__list">
                 <li className="header__menu-item">
@@ -71,6 +72,7 @@ const Header = React.memo((props) => {
               <img src={profileLogo} alt="картинка профиля" className="header__profile-image" />
             </Link>
           </div>
+          <button className="header__menu-button"></button>
         </header >
       } />
 
@@ -79,7 +81,7 @@ const Header = React.memo((props) => {
           <Link to="/" className="header__link">
             <img className="logo" src={headerLogo} alt="Место" />
           </Link>
-          <div className="header__info">
+          <div className="header__info header__info_theme_white">
             <nav className="header__menu">
               <ul className="header__menu-items page__list">
                 <li className="header__menu-item">
@@ -97,6 +99,7 @@ const Header = React.memo((props) => {
               <img src={profileLogo} alt="картинка профиля" className="header__profile-image" />
             </Link>
           </div>
+          <button className="header__menu-button"></button>
         </header >
       } />
 

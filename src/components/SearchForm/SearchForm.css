@@ -99,3 +99,36 @@
   margin: 0;
   transition: all linear .3s;
 }
+
+@media screen and (max-width: 1023px) {
+  .search-form {
+    padding: 80px 0 60px;
+  }
+
+  .search-form__label {
+    align-self: end;
+  }
+
+  .search-form__label::after {
+    left: -133px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .search-form {
+    gap: 40px;
+    padding-bottom: 50px;
+  }
+
+  .search-form__input::placeholder {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .search-form__input {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+}

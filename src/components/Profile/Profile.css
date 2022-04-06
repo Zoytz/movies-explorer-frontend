@@ -20,3 +20,21 @@
   cursor: pointer;
   color: #EE3465;
 }
+
+@media screen and (max-width: 1023px) {
+  .profile {
+    padding: 236px 179px 269px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+
+  .profile__button {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+}

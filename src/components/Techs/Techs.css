@@ -56,3 +56,61 @@
   letter-spacing: -4%;
   font-weight: 400;
 }
+
+@media screen and (max-width: 1023px) {
+  .technologies {
+    padding: 90px 50px;
+  }
+
+  .technologies__title {
+    margin-top: 80px;
+    margin-bottom: 22px;
+  }
+
+  .technologies__subtitle {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .technologies__items {
+    margin-top: 83px;
+  }
+
+  .technologies__item {
+    font-size: 12px;
+    line-height: 15px;
+    min-width: 84px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .technologies {
+    padding: 70px 18px;
+    background-color: #fff;
+  }
+
+  .section-title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .technologies__title {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 60px auto 24px;
+  }
+
+  .technologies__subtitle {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .technologies__items {
+    margin-top: 50px;
+    flex-wrap: wrap;
+    max-width: 178px;
+  }
+
+}

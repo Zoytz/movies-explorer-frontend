@@ -12,3 +12,10 @@
   margin: 50px auto 80px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 767px) {
+  .movies-button {
+    width: 240px;
+  }
+
+}
