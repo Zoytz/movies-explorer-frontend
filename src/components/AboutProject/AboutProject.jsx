@@ -3,7 +3,7 @@ import React from 'react';
 export const AboutProject = React.memo((props) => {
 
   return (
-    <section className="about">
+    <section className="about" id="about-project">
       <h2 className="section-title">О проекте</h2>
       <ul className="about__items page__list">
         <li className="about__item">

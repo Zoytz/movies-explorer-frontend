@@ -31,7 +31,7 @@ const Header = React.memo((props) => {
             <nav className="header__menu">
               <ul className="header__menu-items page__list">
                 <li className="header__menu-item">
-                  <NavLink to="/movies" activeClassName="header__menu-link_active" className="header__menu-link">Фильмы</NavLink>
+                  <NavLink to="/movies" activeClassName="header__menu-link_active" className="header__menu-link header__menu-link_active">Фильмы</NavLink>
                 </li>
                 <li className="header__menu-item">
                   <NavLink to="/saved-movies" activeClassName="header__menu-link_active" className="header__menu-link">Сохранённые фильмы</NavLink>
@@ -61,7 +61,7 @@ const Header = React.memo((props) => {
                   <NavLink to="/movies" activeClassName="header__menu-link_active" className="header__menu-link">Фильмы</NavLink>
                 </li>
                 <li className="header__menu-item">
-                  <NavLink to="/saved-movies" activeClassName="header__menu-link_active" className="header__menu-link">Сохранённые фильмы</NavLink>
+                  <NavLink to="/saved-movies" activeClassName="header__menu-link_active" className="header__menu-link header__menu-link_active">Сохранённые фильмы</NavLink>
                 </li>
               </ul>
             </nav>

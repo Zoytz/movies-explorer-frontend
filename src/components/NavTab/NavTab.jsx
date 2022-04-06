@@ -7,13 +7,13 @@ export const NavTab = React.memo((props) => {
     <nav className="menu">
       <ul className="menu__items page__list">
         <li className="menu__item">
-          <Link to="/sign-in" className="menu__link">О проекте</Link>
+          <a href="#about-project" className="menu__link">О проекте</a>
         </li>
         <li className="menu__item">
-          <Link to="/sign-in" className="menu__link">Технологии</Link>
+          <a href="#technologies" className="menu__link">Технологии</a>
         </li>
         <li className="menu__item">
-          <Link to="/sign-in" className="menu__link">Студент</Link>
+          <a href="#developer" className="menu__link">Студент</a>
         </li>
       </ul>
     </nav>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const AboutMe = React.memo((props) => {
 
   return (
-    <section className="developer">
+    <section className="developer" id="developer">
       <h2 className="section-title">Студент</h2>
       <div className="developer__container">
         <div className="developer__description">
