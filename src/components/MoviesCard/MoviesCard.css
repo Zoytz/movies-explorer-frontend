@@ -47,6 +47,7 @@
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  font-size: 0;
 }
 
 .movies-card__info {
@@ -72,6 +73,18 @@
   font-size: 11px;
   line-height: 10px;
   font-weight: 400;
+}
+
+.movies-card__button_type_saved {
+  border-radius: 30px;
+  height: 21px;
+  width: 21px;
+  border: none;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(../../images/d3.svg);
+  font-size: 0;
 }
 
 @media screen and (max-width: 1023px) {

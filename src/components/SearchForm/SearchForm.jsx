@@ -9,8 +9,8 @@ export const SearchForm = React.memo((props) => {
         <button type="submit" className="search-form__button" aria-label="Кнопка отправки формы">
         </button>
       </div>
-      <label htmlFor="film-checkbox" className="search-form__label">
-        <input className="search-form__checkbox" type="checkbox" name="film-checkbox" id="film-checkbox" />
+      <label htmlFor="film-checkbox" className={`search-form__label ${props.isShortMovie ? 'search-form__label_active' : ''}`}>
+        <input checked={props.isShortMovie} onChange={props.handleFilterMovies} className="search-form__checkbox" type="checkbox" name="film-checkbox" id="film-checkbox" />
         <span className="search-form__custom-checkbox"></span>
       </label>
     </form>

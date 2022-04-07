@@ -37,3 +37,7 @@
 .page__profile {
   margin: 0 auto;
 }
+
+.page__link:hover {
+  opacity: .7;
+}

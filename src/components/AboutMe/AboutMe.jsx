@@ -1,6 +1,5 @@
 import React from 'react';
 import developer from '../../images/developer.png';
-import { Link } from 'react-router-dom';
 
 export const AboutMe = React.memo((props) => {
 
@@ -15,8 +14,8 @@ export const AboutMe = React.memo((props) => {
             и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
           <div className="developer__links">
-            <a target="_blank" href="https://www.torproject.org/" className="developer__link">Facebook</a>
-            <a target="_blank" href="https://github.com/" className="developer__link">Github</a>
+            <a target="_blank" rel="noreferrer" href="https://www.torproject.org/" className="developer__link page__link">Facebook</a>
+            <a target="_blank" rel="noreferrer" href="https://github.com/" className="developer__link page__link">Github</a>
           </div>
         </div>
         <img src={developer} alt="" className="developer__image" />

@@ -6,9 +6,9 @@ export const MoviesCard = React.memo((props) => {
 
   return (
     <li className="movies-card">
-      <Link to="/" className="movies-card__link">
-        <img src={film} alt="" className="movies-card__image" />
-        <button className="movies-card__button">
+      <Link to="/" className="movies-card__link page__link">
+        <img src={film} alt="Картинка фильма" className="movies-card__image" />
+        <button className={`movies-card__button ${props.isSavedMovie ? 'movies-card__button_type_saved' : ''}`}>
           Сохранить
         </button>
       </Link>
