@@ -1,0 +1,43 @@
+.page {
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  position: relative;
+}
+
+.page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__list  {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page__login {
+  margin: 0 auto;
+}
+
+.page__header {
+  margin: 0 auto;
+}
+
+.page__footer {
+  margin: 0 auto;
+}
+
+.page__profile {
+  margin: 0 auto;
+}
+
+.page__link:hover {
+  opacity: .7;
+}

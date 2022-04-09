@@ -1,0 +1,32 @@
+.menu {
+  padding: 24px;
+  background-color: #F5F5F5;
+  font-family: 'inter', Arial, Helvetica, sans-serif;
+}
+
+.menu__items {
+  max-width: 276px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.menu__link {
+  text-decoration: none;
+  color: #000;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 767px) {
+  .menu {
+    padding: 25px 53px;
+  }
+
+  .menu__link {
+    font-size: 11px;
+    border-bottom: 1px solid #000;
+  }
+}
+

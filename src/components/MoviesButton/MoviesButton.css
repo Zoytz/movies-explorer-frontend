@@ -1,0 +1,21 @@
+.movies-button {
+  font-family: 'inter', Arial, Helvetica, sans-serif;
+  display: block;
+  border: 1px solid #E8E8E8;
+  background-color: #fff;
+  width: 320px;
+  height: 36px;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  border-radius: 3px;
+  margin: 50px auto 80px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .movies-button {
+    width: 240px;
+  }
+
+}

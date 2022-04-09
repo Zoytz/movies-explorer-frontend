@@ -1,1 +1,1 @@
-#I tut budet opisanie. No chut' pozje
+# zoytzdiploma.nomoredomains.xyz
