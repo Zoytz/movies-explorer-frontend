@@ -92,3 +92,7 @@
 /* FormInput */
 
 @import url(../src/components/FormInput/FormInput.css);
+
+/* SearchResult */
+
+@import url(../src/components/SearchResult/SearchResult.css);

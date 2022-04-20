@@ -11,12 +11,32 @@ const Header = React.memo((props) => {
           <Link to="/" className="header__link page__link">
             <img className="logo" src={headerLogo} alt="Логотип" />
           </Link>
-          <div className="header__info">
+
+          <div className={`header__info ${props.isLoggedIn ? 'header__info_invisible' : ''}`}>
             <Link to="/sign-up" className="header__link page__link">
               Регистрация
             </Link>
             <Link to="/sign-in" className="header__button page__link">
               Войти
+            </Link>
+          </div>
+
+          <div className={`header__info ${props.isLoggedIn ? '' : 'header__info_invisible'}`}>
+            <nav className="header__menu">
+              <ul className="header__menu-items page__list">
+                <li className="header__menu-item">
+                  <NavLink to="/movies" className="header__menu-link header__menu-link_theme_white page__link">Фильмы</NavLink>
+                </li>
+                <li className="header__menu-item">
+                  <NavLink to="/saved-movies" className="header__menu-link header__menu-link_theme_white page__link">Сохранённые фильмы</NavLink>
+                </li>
+              </ul>
+            </nav>
+            <Link to="/profile" className="header__profile page__link">
+              <p className="header__profile-text header__profile-text_theme_white">
+                Аккаунт
+              </p>
+              <img src={profileLogo} alt="Картинка профиля" className="header__profile-image" />
             </Link>
           </div>
         </header >

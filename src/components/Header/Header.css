@@ -36,6 +36,10 @@
   gap: 30px;
 }
 
+.header__info_invisible {
+  display: none;
+}
+
 .header__button {
   text-decoration: none;
   padding: 8px 20px;
@@ -71,6 +75,10 @@
   padding: 8px 0;
 }
 
+.header__menu-link_theme_white {
+  color: #fff;
+}
+
 .header__menu-link_active {
   font-weight: 500;
 }
@@ -97,6 +105,10 @@
   font-size: 14px;
   line-height: 16px;
   font-weight: 500;
+}
+
+.header__profile-text_theme_white {
+  color: #fff;
 }
 
 .header__menu-button {

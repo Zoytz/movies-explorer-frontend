@@ -1,5 +1,6 @@
 .movies-card {
   font-family: 'inter', Arial, Helvetica, sans-serif;
+  position: relative;
 }
 
 .movies-card__link {
@@ -62,6 +63,7 @@
   font-size: 13px;
   line-height: 16px;
   font-weight: 500;
+  max-width: 80%;
 }
 
 .movies-card__duration {

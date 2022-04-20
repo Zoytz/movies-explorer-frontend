@@ -11,6 +11,12 @@
   border-radius: 3px;
   margin: 50px auto 80px;
   cursor: pointer;
+  visibility: hidden;
+
+}
+
+.movies-button_visible {
+  visibility: visible;
 }
 
 @media screen and (max-width: 767px) {
