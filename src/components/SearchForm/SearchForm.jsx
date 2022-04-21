@@ -13,7 +13,7 @@ export const SearchForm = React.memo((props) => {
   }
 
   React.useEffect(() => {
-    resetForm({[props.type]: props.moviesSearchQuery}, {}, true)
+    resetForm({[props.type]: props.moviesSearchQuery}, {}, true);
   }, [props.moviesSearchQuery]);
 
   return (
@@ -26,7 +26,7 @@ export const SearchForm = React.memo((props) => {
       </div>
       <label htmlFor={`${props.type}-checkbox`} className={`search-form__label ${props.isShortMovie ? 'search-form__label_active' : ''}`}>
         <input defaultChecked={props.isShortMovie} onChange={props.handleFilterMovies} className="search-form__checkbox" type="checkbox" name={`${props.type}-checkbox`} id={`${props.type}-checkbox`} />
-        <span className="search-form__custom-checkbox"></span>
+        <span className={`search-form__custom-checkbox ${props.isShortMovie ? 'search-form__custom-checkbox_active' : ''}`}></span>
       </label>
     </form>
   )

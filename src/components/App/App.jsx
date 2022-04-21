@@ -52,6 +52,7 @@ function App() {
   const [displayedSavedMovies, setDisplayedSavedMovies] = React.useState([]);
   const [isShortSavedMovie, setIsShortSavedMovie] = React.useState(false);
   const [isSavedMoviesButtonActive, setIsSavedMoviesButtonActive] = React.useState(false);
+  const [isPatchUserInfoSucesfull, setIsPatchUserInfoSucesfull] = React.useState(false);
 
 
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ function App() {
   // SavedMovies //
 
   React.useEffect(() => {
+    console.log(movies)
     mainApi.getSavedMovies(localStorage.getItem('token'))
       .then((savedMoviesFromDB) => {
         setSavedMovies(savedMoviesFromDB);
@@ -123,7 +125,7 @@ function App() {
         }
       })
       .catch((err) => console.log(err, 'useeffect saved movies'))
-  }, [moviesQuantity]);
+  }, [moviesQuantity, isShortMovie]);
 
   function handleChoseQuantityMultiplier() {
     const newMultiplier = moviesQuantity + quantityMultiplier;
@@ -134,6 +136,7 @@ function App() {
 
   function handleFilterMovies() {
     setIsShortMovie(!isShortMovie);
+    localStorage.setItem('movieDurationFilter', !isShortMovie);
   }
 
   function handleFilterSavedMovies() {
@@ -144,6 +147,8 @@ function App() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   }
 
+  
+
   function handleSubmitSearchMovie(keyword, movieDurationFilter) {
 
     setIsMoviesSearchSuccessful(true);
@@ -152,10 +157,14 @@ function App() {
 
     setIsLoading(true);
 
+    const moviesFromStorage = localStorage.getItem('films');
+    console.log(JSON.parse(moviesFromStorage));
+
     moviesApi.getMovies()
       .then((resMovies) => {
         setIsMoviesRequestSuccessful(true);
         setMovies(resMovies);
+        localStorage.setItem('films', JSON.stringify(resMovies));
         setIsLoading(false);
       })
       .then(() => {
@@ -223,7 +232,6 @@ function App() {
           localStorage.setItem('displayedFilms', JSON.stringify(slicedMoviesArr));
           setDisplayedMovies(slicedMoviesArr);
           if ((filteredMovies.length > quantityMultiplier) && (filteredMovies.length > moviesQuantity)) {
-            console.log(moviesQuantity)
             setIsMoviesButtonActive(true);
           } else {
             setIsMoviesButtonActive(false);
@@ -253,7 +261,7 @@ function App() {
   const handleRegisterSubmit = (name, email, password) => {
     auth.register(name, email, password)
       .then((res) => {
-        navigate('/sign-in');
+        handleLoginSubmit(email, password);
       })
       .catch((err) => { console.log(err, 'Error from handleRegisterSubmit') })
 
@@ -280,6 +288,12 @@ function App() {
   function handleUpdateUser(data) {
     mainApi.editUserInfo(data, localStorage.getItem('token'))
       .then((user) => setCurrentUser(user))
+      .then(() => {
+        setIsPatchUserInfoSucesfull(true);
+        setTimeout(() => {
+          setIsPatchUserInfoSucesfull(false);
+        }, 2000);
+      })
       .catch((err) => console.log('Error'));
   }
 
@@ -287,7 +301,19 @@ function App() {
   function handleLogout() {
     setIsLoggedIn(false);
     setCurrentUser({});
-    localStorage.removeItem('token');
+    setSerchedMovies([]);
+    setDisplayedMovies([]);
+    setMoviesSearchQuery('');
+    setCurrentUser({});
+    setSavedMovies([]);
+    setDisplayedSavedMovies([]);
+    setIsShortMovie(false);
+    setIsShortSavedMovie(false);
+    localStorage.removeItem('displayedFilms');
+    localStorage.removeItem('searchedFilms');
+    localStorage.removeItem('searchKey');
+    localStorage.removeItem('movieDurationFilter');
+
     navigate('/sign-in');
   }
 
@@ -359,6 +385,10 @@ function App() {
       setDisplayedSavedMovies(filteredMovies);
     }
 
+  }
+
+  function handleCloseMobileMenu() {
+    setIsMobileMenuOpen(false);
   }
 
 
@@ -470,6 +500,7 @@ function App() {
                     handleLogout={handleLogout}
                   >
                     <ProfileForm
+                      isPatchUserInfoSucesfull={isPatchUserInfoSucesfull}
                       handleUpdateUser={handleUpdateUser}
                     />
                   </Profile>
@@ -535,6 +566,7 @@ function App() {
 
           </Routes>
           <MobileMenu
+            handleCloseMobileMenu={handleCloseMobileMenu}
             handleMobileMenuOpen={handleMobileMenuOpen}
             isMobileMenuOpen={isMobileMenuOpen}
           />

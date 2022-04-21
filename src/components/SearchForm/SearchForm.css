@@ -86,9 +86,11 @@
   position: absolute;
 }
 
-.search-form__checkbox:checked + .search-form__custom-checkbox {
+/* .search-form__checkbox:checked + .search-form__custom-checkbox {
   transform: translateX(200%);
-}
+} */
+
+
 
 .search-form__custom-checkbox {
   display: block;
@@ -99,6 +101,10 @@
   transform: translateX(0);
   margin: 0;
   transition: all linear .3s;
+}
+
+.search-form__custom-checkbox_active {
+  transform: translateX(200%);
 }
 
 .search-form-error {

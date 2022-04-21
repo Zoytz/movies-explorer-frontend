@@ -124,6 +124,10 @@
   padding: 0;
 }
 
+.header__menu-button_theme_black {
+  background-color: #5C5C5C;
+}
+
 
 
 @media screen and (max-width: 1023px) {
@@ -137,9 +141,17 @@
     display: none;
   }
 
+  .header__info_theme_black {
+    display: none;
+  }
+
   .header__menu-button {
     visibility: visible;
     display: block;
+  }
+
+  .header__menu-button_inactive {
+    display: none;
   }
 
 }

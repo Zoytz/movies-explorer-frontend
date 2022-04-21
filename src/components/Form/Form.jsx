@@ -6,6 +6,8 @@ export const Form = React.memo((props) => {
 
   const { values, handleChange, isFormValid, resetForm, errors } = useFormWithValidation();
 
+  const emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+
   React.useEffect(() => {
     resetForm({}, {}, false);
   }, [resetForm]);
@@ -37,6 +39,7 @@ export const Form = React.memo((props) => {
               
               />
             <FormInput
+              emailPattern={emailPattern}
               value={values.email}
               error={errors.email}
               isFormValid={isFormValid}
@@ -56,6 +59,7 @@ export const Form = React.memo((props) => {
           :
           <>
             <FormInput
+              emailPattern={emailPattern}
               value={values.email}
               error={errors.email}
               isFormValid={isFormValid}

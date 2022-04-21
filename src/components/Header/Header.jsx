@@ -4,6 +4,7 @@ import React from 'react';
 import profileLogo from '../../images/account.svg';
 
 const Header = React.memo((props) => {
+  
   return (
     <Routes>
       < Route exact path="/" element={
@@ -21,7 +22,7 @@ const Header = React.memo((props) => {
             </Link>
           </div>
 
-          <div className={`header__info ${props.isLoggedIn ? '' : 'header__info_invisible'}`}>
+          <div className={`header__info header__info_theme_black ${props.isLoggedIn ? '' : 'header__info_invisible'}`}>
             <nav className="header__menu">
               <ul className="header__menu-items page__list">
                 <li className="header__menu-item">
@@ -39,6 +40,7 @@ const Header = React.memo((props) => {
               <img src={profileLogo} alt="Картинка профиля" className="header__profile-image" />
             </Link>
           </div>
+          <button onClick={props.handleMobileMenuOpen} className={`header__menu-button header__menu-button_theme_black ${props.isLoggedIn ? '' : 'header__menu-button_inactive'}`}></button>
         </header >
       } />
 

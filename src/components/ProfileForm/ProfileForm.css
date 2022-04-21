@@ -6,6 +6,7 @@
   align-items: center;
   width: 100%;
   min-height: 480px;
+  position: relative;
 }
 
 .profile__form-title {
@@ -83,6 +84,20 @@
 
 .profile__input-error_active {
   visibility: visible;
+}
+
+.profile__info-text {
+  font-size: 20px;
+  display: none;
+  margin: 0;
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile__info-text_visible {
+  display: block;
 }
 
 @media screen and (max-width: 1023px) {
