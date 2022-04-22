@@ -85,7 +85,6 @@ function App() {
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
-          navigate('/movies');
         })
         .catch((err) => {
           console.log('Ошибочка вышла', err);
@@ -318,7 +317,7 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('savedFilms');
 
-    navigate('/sign-in');
+    navigate('/');
   }
 
   function handleSaveMovie(movie) {
@@ -505,7 +504,8 @@ function App() {
             />
 
             <Route path="/sign-up" element={
-              <Main>
+              <ProtectedRoute isLoggedIn={!isLoggedIn}>
+                <Main>
                 <FormContainer
                   footerText='Уже зарегистрированы?'
                   footerLink='Войти'
@@ -516,23 +516,16 @@ function App() {
                     name='register'
                     title='Добро пожаловать!'
                     buttonText='Зарегистрироваться'>
-                    {/* <FormInput
-                    type='name'
-                    title='Имя' />
-                  <FormInput
-                    type='email'
-                    title='E-mail' />
-                  <FormInput
-                    type='password'
-                    title='Пароль' /> */}
                   </Form>
                 </FormContainer>
               </Main>
+              </ProtectedRoute>
             } />
 
             <Route path="/sign-in"
               element={
-                <Main>
+                <ProtectedRoute isLoggedIn={!isLoggedIn}>
+                  <Main>
                   <FormContainer
                     footerText='Ещё не зарегистрированы?'
                     footerLink='Регистрация'
@@ -543,15 +536,10 @@ function App() {
                       name='auth'
                       title='Рады видеть!'
                       buttonText='Войти'>
-                      {/* <FormInput
-                      type='email'
-                      title='E-mail' />
-                    <FormInput
-                      type='password'
-                      title='Пароль' /> */}
                     </Form>
                   </FormContainer>
                 </Main>
+                </ProtectedRoute>
               } />
 
             <Route path="*"
