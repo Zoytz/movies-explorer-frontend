@@ -9,7 +9,7 @@ export const SearchForm = React.memo((props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.handleSubmitSearchMovie(values, props.isShortMovie);
+    props.handleSubmitSearchMovie(values[props.type], props.isShortMovie);
   }
 
   React.useEffect(() => {

@@ -1,9 +1,10 @@
 import React from 'react';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 export const MoviesCard = React.memo((props) => {
 
-  const [ isOwn, setIsOwn ] = React.useState(false);
+  const userInfo = React.useContext(CurrentUserContext);
 
-  let buttonClass = '';
+  console.log(props.currentMovie)
 
   let movie = {};
 
@@ -32,21 +33,10 @@ export const MoviesCard = React.memo((props) => {
     movie.trailerLink = trailerLink;
     movie.thumbnail = `https://api.nomoreparties.co/${image.url}`;
     movie.movieId = id;
+    movie._id = props.currentMovie._id;
 
   } else if (props.userMovies) {
     movie = props.currentMovie;
-  }
-
-  React.useEffect(() => {
-    setIsOwn(props.savedMovies.some(savedMovie => Number(savedMovie.movieId) === movie.movieId));
-  }, [props.savedMovies, isOwn, movie.movieId]);
-
-  if (isOwn) {
-    buttonClass = 'movies-card__button_type_selected';
-  } else if (props.userMovies){
-    buttonClass = 'movies-card__button_type_saved';
-  } else if (!isOwn && !props.userMovies) {
-    buttonClass = '';
   }
 
   let currentDuration = null;
@@ -59,19 +49,27 @@ export const MoviesCard = React.memo((props) => {
 
   getDurationFromMins(movie.duration);
 
-  function movieButtonHandler() {
-    if (props.userMovies) {
-      props.handleDeleteMovie(movie._id);
-      setIsOwn(false);
+  function handleLikeMovie() {
+    if(props.isMovieSaved) {
+      movie.owner = userInfo._id;
+      props.handleDeleteMovie(movie);
     } else {
       props.handleSaveMovie(movie);
-    }
+    } 
   }
+
+  function handleDeleteMovie() {
+    props.handleDeleteMovie(movie);
+  }
+
+  
 
   return (
     <li className="movies-card">
-      <button disabled={isOwn} type='button' onClick={movieButtonHandler} className={`movies-card__button ${buttonClass}`}>
+      <button onClick={handleLikeMovie} type='button' className={`movies-card__button ${props.isMovieSaved ? 'movies-card__button_type_selected' : ''} ${props.userMovies ? 'movies-card__button_inactive' : ''}`}>
         Сохранить
+      </button>
+      <button onClick={handleDeleteMovie} type='button' className={`movies-card__button ${props.allMovies ? 'movies-card__button_inactive' : 'movies-card__button_type_saved'}`}>
       </button>
       <a href={movie.trailerLink} className="movies-card__link page__link" target="_blank" rel="noreferrer">
         <img src={movie.image} alt="Картинка фильма" className="movies-card__image" />

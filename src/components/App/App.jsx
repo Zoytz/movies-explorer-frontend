@@ -38,7 +38,6 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [movies, setMovies] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [serchedMovies, setSerchedMovies] = React.useState([]);
   const [moviesQuantity, setMoviesQuantity] = React.useState(12);
   const [displayedMovies, setDisplayedMovies] = React.useState([]);
   const [isMoviesButtonActive, setIsMoviesButtonActive] = React.useState(false);
@@ -53,11 +52,14 @@ function App() {
   const [isShortSavedMovie, setIsShortSavedMovie] = React.useState(false);
   const [isSavedMoviesButtonActive, setIsSavedMoviesButtonActive] = React.useState(false);
   const [isPatchUserInfoSucesfull, setIsPatchUserInfoSucesfull] = React.useState(false);
+  const [savedMoviesSearchQuery, setSavedMoviesSearchQuery] = React.useState('');
+  const [isSavedMoviesSearchSuccessful, setIsSavedMoviesSearchSuccessful] = React.useState(true);
+  const [isSavedMoviesRequestSuccessful, setIsSavedMoviesRequestSuccessful] = React.useState(true);
+  const [isSaveMovieSucesfull, setIsSaveMovieSucesfull] = React.useState(false);
+  const [isDeleteMovieSucesfull, setIsDeleteMovieSucesfull] = React.useState(false);
 
 
   const navigate = useNavigate();
-
-  // screen size //
 
   React.useEffect(() => {
     const handleScreenResize = () => {
@@ -74,8 +76,6 @@ function App() {
     }
     window.addEventListener('resize', handleScreenResize);
   });
-
-  // check token //
 
   React.useEffect(() => {
     if (!localStorage.getItem('token')) {
@@ -94,44 +94,129 @@ function App() {
     }
   }, []);
 
-  // SavedMovies //
+  React.useEffect(() => {
+    const savedMoviesFromLocalStorage = localStorage.getItem('savedFilms');
+    if (savedMoviesFromLocalStorage === null) {
+      mainApi.getSavedMovies(localStorage.getItem('token'))
+        .then((savedMoviesRes) => {
+          setSavedMovies(savedMoviesRes);
+          localStorage.setItem('savedFilms', JSON.stringify(savedMoviesRes));
+          const filteredArr = filterMovies(savedMoviesRes, savedMoviesSearchQuery, isShortSavedMovie);
+          if (filteredArr.length > 0) {
+            setIsSavedMoviesSearchSuccessful(true);
+          } else {
+            setIsSavedMoviesSearchSuccessful(false);
+          }
+          const slicedArr = filteredArr.slice(0, moviesQuantity);
+          setDisplayedSavedMovies(slicedArr);
+          if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+            setIsSavedMoviesButtonActive(true);
+          } else {
+            setIsSavedMoviesButtonActive(false);
+          }
+          setIsSavedMoviesRequestSuccessful(true);
+        })
+        .catch((err) => {
+          setIsSavedMoviesRequestSuccessful(false);
+          console.log(err, 'useEffect SavedMovie');
+        })
+    } else {
+      setSavedMovies(JSON.parse(savedMoviesFromLocalStorage));
+      const filteredArr = filterMovies(JSON.parse(savedMoviesFromLocalStorage), savedMoviesSearchQuery, isShortSavedMovie);
+      if (filteredArr.length > 0) {
+        setIsSavedMoviesSearchSuccessful(true);
+      } else {
+        setIsSavedMoviesSearchSuccessful(false);
+      }
+      const slicedArr = filteredArr.slice(0, moviesQuantity);
+      setDisplayedSavedMovies(slicedArr);
+      if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+        setIsSavedMoviesButtonActive(true);
+      } else {
+        setIsSavedMoviesButtonActive(false);
+      }
+    }
+  }, [moviesQuantity, isShortSavedMovie, savedMoviesSearchQuery, isSaveMovieSucesfull, isDeleteMovieSucesfull]);
 
   React.useEffect(() => {
-    console.log(movies)
-    mainApi.getSavedMovies(localStorage.getItem('token'))
-      .then((savedMoviesFromDB) => {
-        setSavedMovies(savedMoviesFromDB);
-        const slicedSavedMovies = savedMoviesFromDB.slice(0, moviesQuantity);
-        setDisplayedSavedMovies(slicedSavedMovies);
-        if ((savedMoviesFromDB.length > quantityMultiplier) && (savedMoviesFromDB.length > moviesQuantity)) {
-          setIsSavedMoviesButtonActive(true);
-        } else {
-          setIsSavedMoviesButtonActive(false);
-        }
-      })
-      .then(() => {
-        const searchedMoviesFromStorage = JSON.parse(localStorage.getItem('searchedFilms'));
-        const durationFilterFromStorage = JSON.parse(localStorage.getItem('movieDurationFilter'));
-        const searchKeyFromStorage = String(localStorage.getItem('searchKey'));
-        setIsShortMovie(JSON.parse(durationFilterFromStorage));
-        setMoviesSearchQuery(searchKeyFromStorage);
-        setSerchedMovies(searchedMoviesFromStorage);
-        const slicedMoviesArr = searchedMoviesFromStorage.slice(0, moviesQuantity);
-        setDisplayedMovies(slicedMoviesArr);
-        if ((searchedMoviesFromStorage.length > quantityMultiplier) && (searchedMoviesFromStorage.length > moviesQuantity)) {
-          setIsMoviesButtonActive(true);
-        } else {
-          setIsMoviesButtonActive(false);
-        }
-      })
-      .catch((err) => console.log(err, 'useeffect saved movies'))
-  }, [moviesQuantity, isShortMovie]);
+    const moviesFromLocalStorage = localStorage.getItem('films');
+    const moviesDurationFromLocalStorage = JSON.parse(localStorage.getItem('movieDurationFilter'));
+    const moviesKeywordFromStorage = localStorage.getItem('searchKey');
+    if (moviesFromLocalStorage === null) {
+      return
+    } else {
+      setMovies(JSON.parse(moviesFromLocalStorage));
+      setIsShortMovie(moviesDurationFromLocalStorage);
+      setMoviesSearchQuery(moviesKeywordFromStorage);
+      const filteredArr = filterMovies(JSON.parse(moviesFromLocalStorage), moviesSearchQuery, isShortMovie);
+      if (filteredArr.length > 0) {
+        setIsMoviesSearchSuccessful(true);
+      } else {
+        setIsMoviesSearchSuccessful(false);
+      }
+      const slicedArr = filteredArr.slice(0, moviesQuantity);
+      setDisplayedMovies(slicedArr);
+      if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+        setIsMoviesButtonActive(true);
+      } else {
+        setIsMoviesButtonActive(false);
+      }
+    }
+  }, [moviesQuantity, isShortMovie, moviesSearchQuery, savedMovies]);
+
+  function filterMovies(array, keyword, checkbox) {
+    if (!keyword) {
+      if (checkbox) {
+        return array.filter((movieItem) => {
+          const duration = movieItem.duration;
+          if (duration < 40) {
+            return movieItem;
+          }
+        });
+      } else {
+        return array;
+      }
+    } else {
+      const search = String(keyword).toLowerCase();
+      if (checkbox) {
+        return array.filter((movieItem) => {
+          const duration = movieItem.duration;
+          const country = String(movieItem.country).toLowerCase();
+          const description = String(movieItem.description).toLowerCase();
+          const director = String(movieItem.director).toLowerCase();
+          const nameEN = String(movieItem.nameEN).toLowerCase();
+          const nameRU = String(movieItem.nameRU).toLowerCase();
+          if ((country.includes(search) ||
+            description.includes(search) ||
+            director.includes(search) ||
+            nameEN.includes(search) ||
+            nameRU.includes(search)) &&
+            duration < 40) {
+            return movieItem;
+          }
+        });
+      } else {
+        return array.filter((movieItem) => {
+          const country = String(movieItem.country).toLowerCase();
+          const description = String(movieItem.description).toLowerCase();
+          const director = String(movieItem.director).toLowerCase();
+          const nameEN = String(movieItem.nameEN).toLowerCase();
+          const nameRU = String(movieItem.nameRU).toLowerCase();
+          if (country.includes(search) ||
+            description.includes(search) ||
+            director.includes(search) ||
+            nameEN.includes(search) ||
+            nameRU.includes(search)) {
+            return movieItem;
+          }
+        });
+      }
+    }
+  }
 
   function handleChoseQuantityMultiplier() {
     const newMultiplier = moviesQuantity + quantityMultiplier;
     setMoviesQuantity(newMultiplier);
-    setDisplayedMovies(serchedMovies.slice(0, newMultiplier));
-    setDisplayedSavedMovies(savedMovies.slice(0, newMultiplier));
   }
 
   function handleFilterMovies() {
@@ -147,116 +232,35 @@ function App() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   }
 
-  
-
-  function handleSubmitSearchMovie(keyword, movieDurationFilter) {
-
-    setIsMoviesSearchSuccessful(true);
-
-    localStorage.setItem('movieDurationFilter', movieDurationFilter);
-
-    setIsLoading(true);
-
-    const moviesFromStorage = localStorage.getItem('films');
-    console.log(JSON.parse(moviesFromStorage));
-
-    moviesApi.getMovies()
-      .then((resMovies) => {
-        setIsMoviesRequestSuccessful(true);
-        setMovies(resMovies);
-        localStorage.setItem('films', JSON.stringify(resMovies));
-        setIsLoading(false);
-      })
-      .then(() => {
-        const search = keyword.movies.toLowerCase();
-
-        setMoviesSearchQuery(search);
-        localStorage.setItem('searchKey', search);
-        if (movieDurationFilter) {
-          const filteredMovies = movies.filter((movie) => {
-            const duration = movie.duration;
-            const country = String(movie.country).toLowerCase();
-            const description = String(movie.description).toLowerCase();
-            const director = String(movie.director).toLowerCase();
-            const nameEN = String(movie.nameEN).toLowerCase();
-            const nameRU = String(movie.nameRU).toLowerCase();
-            if ((country.includes(search) ||
-              description.includes(search) ||
-              director.includes(search) ||
-              nameEN.includes(search) ||
-              nameRU.includes(search)) &&
-              duration < 40) {
-              return movie;
-            }
-          });
-          setSerchedMovies(filteredMovies);
-          localStorage.setItem('searchedFilms', JSON.stringify(filteredMovies));
-          if (filteredMovies.length > 0) {
-            setIsMoviesSearchSuccessful(true);
-          } else {
-            setIsMoviesSearchSuccessful(false);
-          }
-          const slicedMoviesArr = filteredMovies.slice(0, moviesQuantity);
-          localStorage.setItem('displayedFilms', JSON.stringify(slicedMoviesArr));
-          setDisplayedMovies(slicedMoviesArr);
-          if ((filteredMovies.length > quantityMultiplier) && (filteredMovies.length > moviesQuantity)) {
-            console.log(moviesQuantity)
-            setIsMoviesButtonActive(true);
-          } else {
-            setIsMoviesButtonActive(false);
-          }
-
-        } else {
-          const filteredMovies = movies.filter((movie) => {
-            const country = String(movie.country).toLowerCase();
-            const description = String(movie.description).toLowerCase();
-            const director = String(movie.director).toLowerCase();
-            const nameEN = String(movie.nameEN).toLowerCase();
-            const nameRU = String(movie.nameRU).toLowerCase();
-            if (country.includes(search) ||
-              description.includes(search) ||
-              director.includes(search) ||
-              nameEN.includes(search) ||
-              nameRU.includes(search)) {
-              return movie;
-            }
-          });
-          setSerchedMovies(filteredMovies);
-          localStorage.setItem('searchedFilms', JSON.stringify(filteredMovies));
-          if (filteredMovies.length > 0) {
-            setIsMoviesSearchSuccessful(true);
-          } else {
-            setIsMoviesSearchSuccessful(false);
-          }
-          const slicedMoviesArr = filteredMovies.slice(0, moviesQuantity);
-          localStorage.setItem('displayedFilms', JSON.stringify(slicedMoviesArr));
-          setDisplayedMovies(slicedMoviesArr);
-          if ((filteredMovies.length > quantityMultiplier) && (filteredMovies.length > moviesQuantity)) {
-            setIsMoviesButtonActive(true);
-          } else {
-            setIsMoviesButtonActive(false);
-          }
-        }
-
-      })
-      // .then(() => {
-      //   if (serchedMovies.length > 0) {
-      //     setIsMoviesSearchSuccessful(true);
-      //   } else {
-      //     setIsMoviesSearchSuccessful(false);
-      //   }
-      //   const slicedMoviesArr = serchedMovies.slice(0, moviesQuantity);
-      //   localStorage.setItem('displayedFilms', JSON.stringify(slicedMoviesArr));
-      //   setDisplayedMovies(slicedMoviesArr);
-      //   if (serchedMovies.length > moviesQuantity) {
-      //     setIsMoviesButtonActive(true);
-      //   }
-      // })
-      .catch((err) => { setIsMoviesSearchSuccessful(true); setIsLoading(false); setIsMoviesRequestSuccessful(false); console.log('Ошибочка вышла', err) });
-
+  function handleSubmitSearchMovie(keyword, chekbox) {
+    const moviesFromLocalStorage = localStorage.getItem('films');
+    if (moviesFromLocalStorage === null) {
+      setIsLoading(true);
+      moviesApi.getMovies()
+        .then((resMovies) => {
+          setMovies(resMovies);
+          localStorage.setItem('films', JSON.stringify(resMovies));
+          localStorage.setItem('searchKey', keyword);
+          setMoviesSearchQuery(keyword);
+          localStorage.setItem('movieDurationFilter', JSON.stringify(chekbox));
+          setIsShortMovie(chekbox);
+          setIsMoviesRequestSuccessful(true);
+        })
+        .catch((err) => {
+          setIsMoviesRequestSuccessful(false);
+          console.log(err, 'handleSubmitSearchMovie');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+    } else {
+      setMovies(JSON.parse(moviesFromLocalStorage));
+      localStorage.setItem('searchKey', keyword);
+      setMoviesSearchQuery(keyword);
+      localStorage.setItem('movieDurationFilter', JSON.stringify(chekbox));
+      setIsShortMovie(chekbox);
+    }
   }
-
-  // Register //
 
   const handleRegisterSubmit = (name, email, password) => {
     auth.register(name, email, password)
@@ -266,8 +270,6 @@ function App() {
       .catch((err) => { console.log(err, 'Error from handleRegisterSubmit') })
 
   }
-
-  // Login //
 
   const handleLoginSubmit = (password, email) => {
     auth.authorize(password, email)
@@ -283,8 +285,6 @@ function App() {
       })
   }
 
-  // UpdateUser //
-
   function handleUpdateUser(data) {
     mainApi.editUserInfo(data, localStorage.getItem('token'))
       .then((user) => setCurrentUser(user))
@@ -297,94 +297,78 @@ function App() {
       .catch((err) => console.log('Error'));
   }
 
-  // Logout //
   function handleLogout() {
     setIsLoggedIn(false);
     setCurrentUser({});
-    setSerchedMovies([]);
-    setDisplayedMovies([]);
+
+    setMovies([]);
     setMoviesSearchQuery('');
-    setCurrentUser({});
+    setDisplayedMovies([]);
+    setIsShortMovie(false);
+
     setSavedMovies([]);
     setDisplayedSavedMovies([]);
-    setIsShortMovie(false);
     setIsShortSavedMovie(false);
-    localStorage.removeItem('displayedFilms');
+    setSavedMoviesSearchQuery('');
+
+    localStorage.removeItem('films');
     localStorage.removeItem('searchedFilms');
     localStorage.removeItem('searchKey');
     localStorage.removeItem('movieDurationFilter');
+    localStorage.removeItem('token');
+    localStorage.removeItem('savedFilms');
 
     navigate('/sign-in');
   }
 
   function handleSaveMovie(movie) {
     mainApi.addMovie(movie, localStorage.getItem('token'))
-      .then(() => {
-        mainApi.getSavedMovies(localStorage.getItem('token'))
-          .then((savedMoviesRes) => {
-            setSavedMovies(savedMoviesRes);
-            const slicedMoviesArr = savedMoviesRes.slice(0, moviesQuantity);
-            setDisplayedSavedMovies(slicedMoviesArr);
-            if (savedMoviesRes.length > moviesQuantity) {
-              setIsSavedMoviesButtonActive(true);
-            }
-          })
-          .catch((err) => console.log(err, 'handleSaveMovie'))
+      .then((savedMovie) => {
+        const newSavedMoviesArr = [savedMovie, ...savedMovies];
+        localStorage.setItem('savedFilms', JSON.stringify(newSavedMoviesArr));
+        setSavedMovies(newSavedMoviesArr);
+        setIsSaveMovieSucesfull(true);
       })
-      .catch((err) => console.log(err, 'handleSaveMovie'))
+      .catch((err) => {
+        console.log(err, 'handleSaveMovie');
+      })
+      .finally(() => {
+        setIsSaveMovieSucesfull(false);
+      })
   }
 
-  function handleDeleteMovie(movieId) {
-    mainApi.deleteMovie(movieId, localStorage.getItem('token'))
+  function handleDeleteMovie(movie) {
+    mainApi.deleteMovie(movie._id, localStorage.getItem('token'))
       .then((deletedMovie) => {
-        setDisplayedSavedMovies(displayedSavedMovies.filter((displayedSavedMovie) => displayedSavedMovie.movieId !== deletedMovie.movieId));
-        const displayedMoviesFromStorage = localStorage.getItem('displayedFilms');
-        setDisplayedMovies(JSON.parse(displayedMoviesFromStorage));
+        console.log(deletedMovie);
+        const newSavedArr = savedMovies.filter(savedMovie => savedMovie._id !== deletedMovie._id);
+        localStorage.setItem('savedFilms', JSON.stringify(newSavedArr));
+        setSavedMovies(newSavedArr);
+        setIsDeleteMovieSucesfull(true);
       })
-      // .then((deletedMovie) => setDisplayedSavedMovies((displayedSavedMovies) => displayedSavedMovies.filter((displayedSavedMovie) => displayedSavedMovie.movieId !== deletedMovie.movieId)))
-      .catch((err) => console.log(err, 'handleDeleteMovie'))
+      .catch((err) => {
+        console.log(err, 'handleDeleteMovie');
+      })
+      .finally(() => {
+        setIsDeleteMovieSucesfull(false);
+      })
   }
 
-  function handleSearchSavedMovies(savedMovieKeyword, savedMovieDurationFilter) {
-
-    const search = savedMovieKeyword.savedMovies.toLowerCase();
-    if (savedMovieDurationFilter) {
-      const filteredMovies = savedMovies.filter((savedMovie) => {
-        const duration = savedMovie.duration;
-        const country = String(savedMovie.country).toLowerCase();
-        const description = String(savedMovie.description).toLowerCase();
-        const director = String(savedMovie.director).toLowerCase();
-        const nameEN = String(savedMovie.nameEN).toLowerCase();
-        const nameRU = String(savedMovie.nameRU).toLowerCase();
-        if ((country.includes(search) ||
-          description.includes(search) ||
-          director.includes(search) ||
-          nameEN.includes(search) ||
-          nameRU.includes(search)) &&
-          duration < 40) {
-          return savedMovie;
-        }
-      });
-      setDisplayedSavedMovies(filteredMovies);
-
+  function handleSearchSavedMovies(keyword, chekbox) {
+    const savedMoviesFromLocalStorage = localStorage.getItem('savedFilms');
+    if (savedMoviesFromLocalStorage === null) {
+      mainApi.getSavedMovies(localStorage.getItem('token'))
+        .then((resMovies) => {
+          setSavedMovies(resMovies);
+          localStorage.setItem('savedFilms', JSON.stringify(resMovies));
+          setSavedMoviesSearchQuery(keyword);
+          setIsShortSavedMovie(chekbox);
+        })
     } else {
-      const filteredMovies = savedMovies.filter((savedMovie) => {
-        const country = String(savedMovie.country).toLowerCase();
-        const description = String(savedMovie.description).toLowerCase();
-        const director = String(savedMovie.director).toLowerCase();
-        const nameEN = String(savedMovie.nameEN).toLowerCase();
-        const nameRU = String(savedMovie.nameRU).toLowerCase();
-        if (country.includes(search) ||
-          description.includes(search) ||
-          director.includes(search) ||
-          nameEN.includes(search) ||
-          nameRU.includes(search)) {
-          return savedMovie;
-        }
-      });
-      setDisplayedSavedMovies(filteredMovies);
+      setSavedMovies(JSON.parse(savedMoviesFromLocalStorage));
+      setSavedMoviesSearchQuery(keyword);
+      setIsShortSavedMovie(chekbox);
     }
-
   }
 
   function handleCloseMobileMenu() {
@@ -424,16 +408,23 @@ function App() {
                       handleFilterMovies={handleFilterMovies}
                       isShortMovie={isShortMovie}
                       type="movies"
-                      serchedMovies={serchedMovies}
                       moviesSearchQuery={moviesSearchQuery}
                     />
                     <MoviesCardList>
                       {
                         displayedMovies.map((movie) => {
+
+                          const isMovieSaved = savedMovies.some((movieItem) => Number(movieItem.movieId) === movie.id);
+                          savedMovies.some((item) => {
+                            if((Number(item.movieId) === movie.id)){
+                              movie._id = item._id;
+                            }
+                          })
                           return (<MoviesCard
-                            savedMovies={savedMovies}
+                            isMovieSaved={isMovieSaved}
                             allMovies={true}
                             handleSaveMovie={handleSaveMovie}
+                            handleDeleteMovie={handleDeleteMovie}
                             currentMovie={movie}
                             key={movie.id}
                           />)
@@ -481,6 +472,10 @@ function App() {
                         })
                       }
                     </MoviesCardList>
+                    <SearchResult
+                      isMoviesRequestSuccessful={isSavedMoviesRequestSuccessful}
+                      isMoviesSearchSuccessful={isSavedMoviesSearchSuccessful}
+                    />
                     <MoviesButton
                       isMoviesButtonActive={isSavedMoviesButtonActive}
                       handleChoseQuantityMultiplier={handleChoseQuantityMultiplier}
