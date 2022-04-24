@@ -6,7 +6,7 @@ export const Form = React.memo((props) => {
 
   const { values, handleChange, isFormValid, resetForm, errors } = useFormWithValidation();
 
-  const emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+  const emailPattern = '\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*\\.\\w{2,4}';
 
   React.useEffect(() => {
     resetForm({}, {}, false);

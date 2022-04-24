@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = React.memo(({isLoggedIn, children}) => {
   return (
-    isLoggedIn ? children : <Navigate to="/" />
+    isLoggedIn ? children : <Navigate to="/movies" />
   );
 });
 

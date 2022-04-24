@@ -4,8 +4,6 @@ export const MoviesCard = React.memo((props) => {
 
   const userInfo = React.useContext(CurrentUserContext);
 
-  console.log(props.currentMovie)
-
   let movie = {};
 
   if (props.allMovies) {

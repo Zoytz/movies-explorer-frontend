@@ -88,54 +88,59 @@ function App() {
         })
         .catch((err) => {
           console.log('Ошибочка вышла', err);
-          navigate('/');
         });
     }
   }, []);
 
   React.useEffect(() => {
-    const savedMoviesFromLocalStorage = localStorage.getItem('savedFilms');
-    if (savedMoviesFromLocalStorage === null) {
-      mainApi.getSavedMovies(localStorage.getItem('token'))
-        .then((savedMoviesRes) => {
-          setSavedMovies(savedMoviesRes);
-          localStorage.setItem('savedFilms', JSON.stringify(savedMoviesRes));
-          const filteredArr = filterMovies(savedMoviesRes, savedMoviesSearchQuery, isShortSavedMovie);
-          if (filteredArr.length > 0) {
-            setIsSavedMoviesSearchSuccessful(true);
-          } else {
-            setIsSavedMoviesSearchSuccessful(false);
-          }
-          const slicedArr = filteredArr.slice(0, moviesQuantity);
-          setDisplayedSavedMovies(slicedArr);
-          if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
-            setIsSavedMoviesButtonActive(true);
-          } else {
-            setIsSavedMoviesButtonActive(false);
-          }
-          setIsSavedMoviesRequestSuccessful(true);
-        })
-        .catch((err) => {
-          setIsSavedMoviesRequestSuccessful(false);
-          console.log(err, 'useEffect SavedMovie');
-        })
+    if (!isLoggedIn) {
+      return
     } else {
-      setSavedMovies(JSON.parse(savedMoviesFromLocalStorage));
-      const filteredArr = filterMovies(JSON.parse(savedMoviesFromLocalStorage), savedMoviesSearchQuery, isShortSavedMovie);
-      if (filteredArr.length > 0) {
-        setIsSavedMoviesSearchSuccessful(true);
+      setIsSavedMoviesRequestSuccessful(true);
+      const savedMoviesFromLocalStorage = localStorage.getItem('savedFilms');
+      if (savedMoviesFromLocalStorage === null) {
+        mainApi.getSavedMovies(localStorage.getItem('token'))
+          .then((savedMoviesRes) => {
+            setSavedMovies(savedMoviesRes);
+            localStorage.setItem('savedFilms', JSON.stringify(savedMoviesRes));
+            const filteredArr = filterMovies(savedMoviesRes, savedMoviesSearchQuery, isShortSavedMovie);
+            if (filteredArr.length > 0) {
+              setIsSavedMoviesSearchSuccessful(true);
+            } else {
+              setIsSavedMoviesSearchSuccessful(false);
+            }
+            const slicedArr = filteredArr.slice(0, moviesQuantity);
+            setDisplayedSavedMovies(slicedArr);
+            if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+              setIsSavedMoviesButtonActive(true);
+            } else {
+              setIsSavedMoviesButtonActive(false);
+            }
+            setIsSavedMoviesRequestSuccessful(true);
+          })
+          .catch((err) => {
+            setIsSavedMoviesRequestSuccessful(false);
+            console.log(err, 'useEffect SavedMovie');
+          })
       } else {
-        setIsSavedMoviesSearchSuccessful(false);
-      }
-      const slicedArr = filteredArr.slice(0, moviesQuantity);
-      setDisplayedSavedMovies(slicedArr);
-      if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
-        setIsSavedMoviesButtonActive(true);
-      } else {
-        setIsSavedMoviesButtonActive(false);
+        setSavedMovies(JSON.parse(savedMoviesFromLocalStorage));
+        const filteredArr = filterMovies(JSON.parse(savedMoviesFromLocalStorage), savedMoviesSearchQuery, isShortSavedMovie);
+        if (filteredArr.length > 0) {
+          setIsSavedMoviesSearchSuccessful(true);
+        } else {
+          setIsSavedMoviesSearchSuccessful(false);
+        }
+        const slicedArr = filteredArr.slice(0, moviesQuantity);
+        setDisplayedSavedMovies(slicedArr);
+        if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+          setIsSavedMoviesButtonActive(true);
+        } else {
+          setIsSavedMoviesButtonActive(false);
+        }
       }
     }
-  }, [moviesQuantity, isShortSavedMovie, savedMoviesSearchQuery, isSaveMovieSucesfull, isDeleteMovieSucesfull]);
+
+  }, [isLoggedIn, moviesQuantity, isShortSavedMovie, savedMoviesSearchQuery, isSaveMovieSucesfull, isDeleteMovieSucesfull]);
 
   React.useEffect(() => {
     const moviesFromLocalStorage = localStorage.getItem('films');
@@ -265,6 +270,7 @@ function App() {
     auth.register(name, email, password)
       .then((res) => {
         handleLoginSubmit(email, password);
+        navigate('/movies');
       })
       .catch((err) => { console.log(err, 'Error from handleRegisterSubmit') })
 
@@ -415,7 +421,7 @@ function App() {
 
                           const isMovieSaved = savedMovies.some((movieItem) => Number(movieItem.movieId) === movie.id);
                           savedMovies.some((item) => {
-                            if((Number(item.movieId) === movie.id)){
+                            if ((Number(item.movieId) === movie.id)) {
                               movie._id = item._id;
                             }
                           })
@@ -504,8 +510,7 @@ function App() {
             />
 
             <Route path="/sign-up" element={
-              <ProtectedRoute isLoggedIn={!isLoggedIn}>
-                <Main>
+              <Main>
                 <FormContainer
                   footerText='Уже зарегистрированы?'
                   footerLink='Войти'
@@ -519,13 +524,11 @@ function App() {
                   </Form>
                 </FormContainer>
               </Main>
-              </ProtectedRoute>
             } />
 
             <Route path="/sign-in"
               element={
-                <ProtectedRoute isLoggedIn={!isLoggedIn}>
-                  <Main>
+                <Main>
                   <FormContainer
                     footerText='Ещё не зарегистрированы?'
                     footerLink='Регистрация'
@@ -539,7 +542,6 @@ function App() {
                     </Form>
                   </FormContainer>
                 </Main>
-                </ProtectedRoute>
               } />
 
             <Route path="*"

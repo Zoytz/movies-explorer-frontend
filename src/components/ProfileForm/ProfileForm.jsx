@@ -7,6 +7,8 @@ export const ProfileForm = React.memo((props) => {
 
   const { values, handleChange, isFormValid, resetForm, errors } = useFormWithValidation();
 
+  const emailPattern = '\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*\\.\\w{2,4}';
+
   const userInfo = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
@@ -27,7 +29,7 @@ export const ProfileForm = React.memo((props) => {
     });
   }
 
-  const buttonStatus = (isFormValid && ((values.profileName !== userInfo.name) && (values.profileEmail !== userInfo.email)));
+  const buttonStatus = (isFormValid && (values.profileEmail !== userInfo.email));
 
   return (
     <form onSubmit={handleSubmit} className="profile__form" name="profile-form" noValidate>
@@ -43,7 +45,7 @@ export const ProfileForm = React.memo((props) => {
           </label>
           <label htmlFor="" className="profile__label">
             E-mail
-            <input onChange={handleChange} value={values.profileEmail || ''} type="email" className="profile__input" name="profileEmail" required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'/>
+            <input onChange={handleChange} value={values.profileEmail || ''} type="email" className="profile__input" name="profileEmail" required pattern={emailPattern} />
             <span className={`profile__input-error ${isFormValid ? '' : 'profile__input-error_active'}`}>{errors.profileEmail}</span>
           </label>
         <p className={`profile__info-text ${props.isPatchUserInfoSucesfull ? 'profile__info-text_visible' : ''}`}>Успешно!</p>
