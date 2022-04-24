@@ -96,6 +96,7 @@ function App() {
     if (!isLoggedIn) {
       return
     } else {
+      setIsSavedMoviesButtonActive(false);
       setIsSavedMoviesRequestSuccessful(true);
       const savedMoviesFromLocalStorage = localStorage.getItem('savedFilms');
       if (savedMoviesFromLocalStorage === null) {
@@ -143,30 +144,35 @@ function App() {
   }, [isLoggedIn, moviesQuantity, isShortSavedMovie, savedMoviesSearchQuery, isSaveMovieSucesfull, isDeleteMovieSucesfull]);
 
   React.useEffect(() => {
-    const moviesFromLocalStorage = localStorage.getItem('films');
-    const moviesDurationFromLocalStorage = JSON.parse(localStorage.getItem('movieDurationFilter'));
-    const moviesKeywordFromStorage = localStorage.getItem('searchKey');
-    if (moviesFromLocalStorage === null) {
+    if (!isLoggedIn) {
       return
     } else {
-      setMovies(JSON.parse(moviesFromLocalStorage));
-      setIsShortMovie(moviesDurationFromLocalStorage);
-      setMoviesSearchQuery(moviesKeywordFromStorage);
-      const filteredArr = filterMovies(JSON.parse(moviesFromLocalStorage), moviesSearchQuery, isShortMovie);
-      if (filteredArr.length > 0) {
-        setIsMoviesSearchSuccessful(true);
+      const moviesFromLocalStorage = localStorage.getItem('films');
+      const moviesDurationFromLocalStorage = JSON.parse(localStorage.getItem('movieDurationFilter'));
+      const moviesKeywordFromStorage = localStorage.getItem('searchKey');
+      setIsMoviesButtonActive(false);
+      if (moviesFromLocalStorage === null) {
+        return
       } else {
-        setIsMoviesSearchSuccessful(false);
-      }
-      const slicedArr = filteredArr.slice(0, moviesQuantity);
-      setDisplayedMovies(slicedArr);
-      if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
-        setIsMoviesButtonActive(true);
-      } else {
-        setIsMoviesButtonActive(false);
+        setMovies(JSON.parse(moviesFromLocalStorage));
+        setIsShortMovie(moviesDurationFromLocalStorage);
+        setMoviesSearchQuery(moviesKeywordFromStorage);
+        const filteredArr = filterMovies(JSON.parse(moviesFromLocalStorage), moviesSearchQuery, isShortMovie);
+        if (filteredArr.length > 0) {
+          setIsMoviesSearchSuccessful(true);
+        } else {
+          setIsMoviesSearchSuccessful(false);
+        }
+        const slicedArr = filteredArr.slice(0, moviesQuantity);
+        setDisplayedMovies(slicedArr);
+        if ((filteredArr.length > quantityMultiplier) && (filteredArr.length > moviesQuantity)) {
+          setIsMoviesButtonActive(true);
+        } else {
+          setIsMoviesButtonActive(false);
+        }
       }
     }
-  }, [moviesQuantity, isShortMovie, moviesSearchQuery, savedMovies]);
+  }, [isLoggedIn, moviesQuantity, isShortMovie, moviesSearchQuery, savedMovies]);
 
   function filterMovies(array, keyword, checkbox) {
     if (!keyword) {
