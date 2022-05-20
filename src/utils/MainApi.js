@@ -71,7 +71,7 @@ class Api {
 }
 
 const mainApi = new Api({
-  url: 'http://localhost:3000/',
+  url: 'https://api.zoytzdiploma.nomoredomains.xyz/',
 })
 
 export default mainApi;
