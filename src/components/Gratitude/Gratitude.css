@@ -1,0 +1,65 @@
+.gratitude {
+  font-family: 'inter', Arial, Helvetica, sans-serif;
+  padding: 0px 70px 50px;
+  background-color: #fff;
+}
+
+.gratitude__cats {
+  padding: 30px 0 30px;
+  display: grid;
+}
+
+.gratitude__cat {
+  position: relative;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.gratitude__title {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+}
+
+.gratitude__subtitle {
+  font-size: 22px;
+  line-height: 27px;
+  font-weight: 400;
+  color: #000;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #000;
+}
+
+.gratitude__cat-image {
+  width: 100%;
+  height: 100%;
+}
+
+.gratitude__cat-image_type_kuzya {
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
+}
+
+.gratitude__cat-image_type_marusya {
+  grid-column: 3 / 5;
+  grid-row: 2 / 5;
+}
+
+.gratitude__cat-image_type_top-kitten {
+  grid-row: 1 / 2;
+}
+
+.gratitude__cat-image_type_bottom-kitten {
+  grid-row: 4 / 5;
+}
+
+.gratitude__player {
+  display: block;
+  margin: 40px auto 0;
+  width: 882px;
+  height: 497px;
+  border: 0;
+}

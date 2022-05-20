@@ -1,10 +1,13 @@
-export const BASE_URL = 'https://api.zoytzdiploma.nomoredomains.xyz';
+export const BASE_URL = 'http://localhost:3000';
 
-function checkResOk(res) {
-  if (res.ok) {
-    return res.json();
+async  function checkResOk(res) {
+  if (!res.ok) {
+    const error = await res.json();
+    return Promise.reject(new Error(error.message));
+    // return res.json();
   }
-  return Promise.reject('checkResOk');
+  return res.json();
+  // return Promise.reject();
 }
 
 export const register = (name, email, password) => {

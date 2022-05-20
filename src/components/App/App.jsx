@@ -4,7 +4,6 @@ import Main from '../Main/Main';
 import { Promo } from '../Promo/Promo';
 import { Techs } from '../Techs/Techs';
 import { AboutMe } from '../AboutMe/AboutMe';
-import { Portfolio } from '../Portfolio/Portfolio';
 import { SearchForm } from '../SearchForm/SearchForm';
 import { Movies } from '../Movies/Movies';
 import { MoviesCardList } from '../MoviesCardList/MoviesCardList';
@@ -16,6 +15,7 @@ import { ProfileForm } from '../ProfileForm/ProfileForm';
 import { Page404 } from '../Page404/Page404';
 import { FormContainer } from '../FormContainer/FormContainer';
 import { Form } from '../Form/Form';
+import { Diploma } from '../Diploma/Diploma';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import SearchResult from '../SearchResult/SearchResult';
 import Preloader from '../Preloader/Preloader';
@@ -57,6 +57,8 @@ function App() {
   const [isSavedMoviesRequestSuccessful, setIsSavedMoviesRequestSuccessful] = React.useState(true);
   const [isSaveMovieSucesfull, setIsSaveMovieSucesfull] = React.useState(false);
   const [isDeleteMovieSucesfull, setIsDeleteMovieSucesfull] = React.useState(false);
+  const [formError, setFormError] = React.useState('');
+  const [formErrorStatus, setFormErrorStatus] = React.useState(false);
 
 
   const navigate = useNavigate();
@@ -278,7 +280,14 @@ function App() {
         handleLoginSubmit(email, password);
         navigate('/movies');
       })
-      .catch((err) => { console.log(err, 'Error from handleRegisterSubmit') })
+      .catch((err) => {
+        setFormError(err.message);
+        setFormErrorStatus(true);
+        setTimeout(() => {
+          setFormError('');
+          setFormErrorStatus(false);
+        }, 2000);
+      })
 
   }
 
@@ -292,7 +301,15 @@ function App() {
             setIsLoggedIn(true);
             navigate('/movies');
           })
-          .catch((err) => console.log('Ошибка в Login', err))
+          .catch((err) => console.log(err))
+      })
+      .catch((err) => {
+        setFormError(err.message);
+        setFormErrorStatus(true);
+        setTimeout(() => {
+          setFormError('');
+          setFormErrorStatus(false);
+        }, 2000);
       })
   }
 
@@ -403,7 +420,7 @@ function App() {
                 <AboutProject />
                 <Techs />
                 <AboutMe />
-                <Portfolio />
+                <Diploma />
                 <Footer />
               </Main>
 
@@ -526,7 +543,9 @@ function App() {
                     handleLoginSubmit={handleLoginSubmit}
                     name='register'
                     title='Добро пожаловать!'
-                    buttonText='Зарегистрироваться'>
+                    buttonText='Зарегистрироваться'
+                    formError={formError}
+                    formErrorStatus={formErrorStatus}>
                   </Form>
                 </FormContainer>
               </Main>
@@ -544,7 +563,9 @@ function App() {
                       handleLoginSubmit={handleLoginSubmit}
                       name='auth'
                       title='Рады видеть!'
-                      buttonText='Войти'>
+                      buttonText='Войти'
+                      formError={formError}
+                      formErrorStatus={formErrorStatus}>
                     </Form>
                   </FormContainer>
                 </Main>

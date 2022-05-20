@@ -1,0 +1,40 @@
+.diploma {
+  padding: 110px 70px 110px;
+  background-color: #fff;
+  max-width: 1280px;
+  box-sizing: border-box;
+}
+
+.diploma__images {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.diploma__image {
+  max-width: 45%;
+  width: 100%;
+  min-width: 440px;
+  transition: all linear .2s;
+}
+
+.diploma__image:last-of-type:hover {
+  transform: scale(1.7) translateX(-30%);
+}
+
+@media screen and (max-width: 1023px) {
+  .diploma__images {
+    flex-direction: column;
+  }
+
+  .diploma__image {
+    max-width: 100%;
+  }
+
+  .diploma__image:last-of-type:hover {
+    transform: none;
+  }
+
+}

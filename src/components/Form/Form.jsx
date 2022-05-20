@@ -78,6 +78,7 @@ export const Form = React.memo((props) => {
           </>
         }
       </div>
+      <p className={`form__info ${props.formErrorStatus ? 'form__info_active' : ''}`}>{props.formError}</p>
       <button disabled={!isFormValid} type="submit" className={`form__button ${isFormValid ? '' : 'form__button_disabled'}`} value={props.buttonText} aria-label="Кнопка отправки формы">{props.buttonText}</button>
     </form>
   )
