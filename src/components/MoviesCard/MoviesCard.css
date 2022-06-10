@@ -1,5 +1,6 @@
 .movies-card {
   font-family: 'inter', Arial, Helvetica, sans-serif;
+  position: relative;
 }
 
 .movies-card__link {
@@ -38,6 +39,10 @@
   cursor: pointer;
 }
 
+.movies-card__button_inactive {
+  display: none;
+}
+
 .movies-card__button_type_selected {
   border-radius: 30px;
   height: 21px;
@@ -62,6 +67,7 @@
   font-size: 13px;
   line-height: 16px;
   font-weight: 500;
+  max-width: 80%;
 }
 
 .movies-card__duration {

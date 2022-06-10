@@ -1,6 +1,6 @@
 .developer {
   font-family: 'inter', Arial, Helvetica, sans-serif;
-  padding: 110px 70px 0;
+  padding: 110px 70px 110px;
   background-color: #fff;
 }
 
@@ -17,6 +17,7 @@
 .developer__image {
   width: 270px;
   height: 327px;
+  object-fit: cover;
 }
 
 .developer__links {
@@ -60,9 +61,13 @@
   margin: 0;
 }
 
+.developer__span {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 1023px) {
   .developer {
-    padding: 90px 50px 0;
+    padding: 90px 50px 90px;
   }
 
   .developer__title {

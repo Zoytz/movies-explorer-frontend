@@ -11,17 +11,17 @@ const MobileMenu = React.memo((props) => {
         <nav className="mobile-menu__navigation">
           <ul className="mobile-menu__items page__list">
             <li className="mobile-menu__item">
-              <NavLink to="/" className="mobile-menu__link page__link">Главная</NavLink>
+              <NavLink onClick={props.handleCloseMobileMenu} to="/" className="mobile-menu__link page__link">Главная</NavLink>
             </li>
             <li className="mobile-menu__item">
-              <NavLink to="/movies" className="mobile-menu__link page__link">Фильмы</NavLink>
+              <NavLink onClick={props.handleCloseMobileMenu} to="/movies" className="mobile-menu__link page__link">Фильмы</NavLink>
             </li>
             <li className="mobile-menu__item">
-              <NavLink to="/saved-movies" className="mobile-menu__link page__link">Сохранённые фильмы</NavLink>
+              <NavLink onClick={props.handleCloseMobileMenu} to="/saved-movies" className="mobile-menu__link page__link">Сохранённые фильмы</NavLink>
             </li>
           </ul>
         </nav>
-        <Link to="/profile" className="header__profile page__link">
+        <Link onClick={props.handleCloseMobileMenu} to="/profile" className="header__profile page__link">
           <p className="header__profile-text">
             Аккаунт
           </p>

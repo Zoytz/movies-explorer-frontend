@@ -4,6 +4,7 @@ import React from 'react';
 import profileLogo from '../../images/account.svg';
 
 const Header = React.memo((props) => {
+  
   return (
     <Routes>
       < Route exact path="/" element={
@@ -11,7 +12,8 @@ const Header = React.memo((props) => {
           <Link to="/" className="header__link page__link">
             <img className="logo" src={headerLogo} alt="Логотип" />
           </Link>
-          <div className="header__info">
+
+          <div className={`header__info ${props.isLoggedIn ? 'header__info_invisible' : ''}`}>
             <Link to="/sign-up" className="header__link page__link">
               Регистрация
             </Link>
@@ -19,6 +21,26 @@ const Header = React.memo((props) => {
               Войти
             </Link>
           </div>
+
+          <div className={`header__info header__info_theme_black ${props.isLoggedIn ? '' : 'header__info_invisible'}`}>
+            <nav className="header__menu">
+              <ul className="header__menu-items page__list">
+                <li className="header__menu-item">
+                  <NavLink to="/movies" className="header__menu-link header__menu-link_theme_white page__link">Фильмы</NavLink>
+                </li>
+                <li className="header__menu-item">
+                  <NavLink to="/saved-movies" className="header__menu-link header__menu-link_theme_white page__link">Сохранённые фильмы</NavLink>
+                </li>
+              </ul>
+            </nav>
+            <Link to="/profile" className="header__profile page__link">
+              <p className="header__profile-text header__profile-text_theme_white">
+                Аккаунт
+              </p>
+              <img src={profileLogo} alt="Картинка профиля" className="header__profile-image" />
+            </Link>
+          </div>
+          <button onClick={props.handleMobileMenuOpen} className={`header__menu-button header__menu-button_theme_black ${props.isLoggedIn ? '' : 'header__menu-button_inactive'}`}></button>
         </header >
       } />
 

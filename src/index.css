@@ -92,3 +92,15 @@
 /* FormInput */
 
 @import url(../src/components/FormInput/FormInput.css);
+
+/* SearchResult */
+
+@import url(../src/components/SearchResult/SearchResult.css);
+
+/* Gratitude */
+
+@import url(../src/components/Gratitude/Gratitude.css);
+
+/* Diploma */
+
+@import url(../src/components/Diploma/Diploma.css);
